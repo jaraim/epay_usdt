@@ -34,11 +34,11 @@ class usdt_plugin
     {
         global $channel, $order, $conf, $DB, $cdnpublic;
 
-        $valid   = (strtotime($order['addtime']) + intval($channel['appurl'])) * 1000;
+        $valid=(strtotime(order['addtime']) + intval($channel['appurl'])) * 1000;
         $address = $channel['appid'];
         $rate    = self::getRate();
         $usdt    = round($order['realmoney'] / $rate, 2);
-        $expire  = date('Y-m-d H:i:s', strtotime($order['addtime']) - intval($channel['appurl']));;
+        $expire = date('Y-m-d H:i:s', strtotime($order['addtime']) + intval($channel['appurl']));
         $params = [$channel['id'], 0, $expire, $order['trade_no'], $order['money']];
         $row    = $DB->getRow('select * from pre_order where channel = ? and status = ? and addtime >= ? and trade_no != ? and money = ? order by param desc limit 1', $params);
         if ($row) {
